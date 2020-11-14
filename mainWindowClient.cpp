@@ -2,7 +2,10 @@
 
 mainWindowClient::mainWindowClient() : QWidget(){
     setupUi(this);
+    // set feature for some widgets
     logoLabel->setPixmap(QPixmap(QApplication::applicationDirPath() + "/../AlooClient/img/iconApp.png"));
+    chatZone->setEnabled(false);
+
     socket = new QTcpSocket(this);
     connect(socket, SIGNAL(connected()), this, SLOT(connected()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(readMessage()));
@@ -76,16 +79,16 @@ void mainWindowClient::readMessage() {
 
 void mainWindowClient::connected() {
     chatZone->append(tr("<em>Connect successfully !</em>"));
+    // theses widgets will be enabled only connection established
     disconnectButton->setEnabled(true);
+    chatZone->setEnabled(true);
 }
 
 void mainWindowClient::disconnected() {
     chatZone->append(tr("<em>goodbye, see you again !</em>"));
-    /*
-    * Todo: have to have button to disconnect
-    */
     ConnectButton->setEnabled(true);
     disconnectButton->setEnabled(false);
+    chatZone->setEnabled(false);
 }
 
 void mainWindowClient::errorSocket(QAbstractSocket::SocketError err) {
