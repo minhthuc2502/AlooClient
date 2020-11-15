@@ -4,7 +4,7 @@
 #include <QtWidgets>
 #include "ui_formUser.h"
 
-class formLogin : public QWidget, private Ui::formUser {
+class formLogin : public QDialog, private Ui::formUser {
     Q_OBJECT
 public:
     formLogin();
@@ -13,10 +13,12 @@ public:
 private slots:
     void HandleCloseButton();
     void saveInfo();
+    void addAvatar();
 signals:
     void clickedCloseButton();
 private:
     QString name;
     quint8 age;
+    QPixmap avatar;
 };
 #endif // FORMLOGIN_H

@@ -4,6 +4,7 @@ userInfo::userInfo() {
     nickName = "";
     age = 0;
     idSocket = NULL;
+    avatar = NULL;
 }
 
 void userInfo::setNickName(QString name) {

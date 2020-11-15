@@ -17,6 +17,7 @@ private:
     QString nickName;
     quint8 age;
     QTcpSocket *idSocket;
+    QImage *avatar;
 };
 
 #endif // USERINFO_H

@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>formUser</class>
- <widget class="QWidget" name="formUser">
+ <widget class="QDialog" name="formUser">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>150</height>
+    <width>371</width>
+    <height>226</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="verticalLayoutWidget">
+  <widget class="QWidget" name="verticalLayoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>9</y>
-     <width>381</width>
-     <height>125</height>
+     <x>10</x>
+     <y>10</y>
+     <width>344</width>
+     <height>211</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QVBoxLayout" name="verticalLayout_3">
     <item>
      <widget class="QLabel" name="inforLabel">
       <property name="sizePolicy">
@@ -40,24 +40,59 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="horizontalLayout_8">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
-        <item>
-         <widget class="QLabel" name="nameLabel">
-          <property name="text">
-           <string>Name :</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="AgeLabel">
-          <property name="text">
-           <string>Age :</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <widget class="QLabel" name="nameLabel">
+        <property name="text">
+         <string>Name :</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>7</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="nameLineEdit"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_9">
+      <item>
+       <widget class="QLabel" name="AgeLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Age :</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="ageSpinBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
       </item>
       <item>
        <spacer name="horizontalSpacer">
@@ -65,48 +100,74 @@
          <enum>Qt::Horizontal</enum>
         </property>
         <property name="sizeType">
-         <enum>QSizePolicy::Preferred</enum>
+         <enum>QSizePolicy::Fixed</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
+          <width>230</width>
           <height>20</height>
          </size>
         </property>
        </spacer>
       </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_10">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_8">
-        <item>
-         <widget class="QLineEdit" name="nameLineEdit"/>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="ageSpinBox">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <widget class="QLabel" name="avatarLabel">
+        <property name="text">
+         <string>Avatar: </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGraphicsView" name="avataView"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="addImageButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>100</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
-       <widget class="QPushButton" name="confirmButton">
+       <widget class="QPushButton" name="closeButton">
         <property name="text">
-         <string>Confirm</string>
+         <string>Close</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="closeButton">
+       <widget class="QPushButton" name="confirmButton">
         <property name="text">
-         <string>Close</string>
+         <string>Confirm</string>
         </property>
        </widget>
       </item>

@@ -23,11 +23,11 @@ mainWindowClient::mainWindowClient() : QWidget(){
 }
 
 void mainWindowClient::pressConnectButton() {
+    // open form get info user
     fLogin = new formLogin();
     connect(fLogin, SIGNAL(clickedCloseButton()), this, SLOT(getInfoUser()));
-
+    fLogin->setModal(true);
     fLogin->show();
-    this->setEnabled(false);
 }
 
 void mainWindowClient::pressDisconnectButton() {
@@ -125,7 +125,4 @@ void mainWindowClient::getInfoUser() {
 
     user.getSocketId()->abort();
     user.getSocketId()->connectToHost(ipAddresse->text(), portSpinBox->value());
-
-    // enable main window
-    this->setEnabled(true);
 }
