@@ -6,11 +6,13 @@ mainWindowClient::mainWindowClient() : QWidget(){
     logoLabel->setPixmap(QPixmap(QApplication::applicationDirPath() + "/../AlooClient/img/iconApp.png"));
     chatZone->setEnabled(false);
 
-    socket = new QTcpSocket(this);
-    connect(socket, SIGNAL(connected()), this, SLOT(connected()));
-    connect(socket, SIGNAL(readyRead()), this, SLOT(readMessage()));
-    connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
-    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(errorSocket(QAbstractSocket::SocketError)));
+    QTcpSocket *socket = new QTcpSocket(this);
+    user.setSocketId(socket);
+
+    connect(user.getSocketId(), SIGNAL(connected()), this, SLOT(connected()));
+    connect(user.getSocketId(), SIGNAL(readyRead()), this, SLOT(readMessage()));
+    connect(user.getSocketId(), SIGNAL(disconnected()), this, SLOT(disconnected()));
+    connect(user.getSocketId(), SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(errorSocket(QAbstractSocket::SocketError)));
 
     connect(ConnectButton, SIGNAL(clicked()), this, SLOT(pressConnectButton()));
     connect(disconnectButton, SIGNAL(clicked(bool)), this, SLOT(pressDisconnectButton()));
@@ -21,16 +23,15 @@ mainWindowClient::mainWindowClient() : QWidget(){
 }
 
 void mainWindowClient::pressConnectButton() {
-    // setup connection
-    chatZone->append(tr("<em>Connecting to server...</em>"));
-    ConnectButton->setEnabled(false);
+    fLogin = new formLogin();
+    connect(fLogin, SIGNAL(clickedCloseButton()), this, SLOT(getInfoUser()));
 
-    socket->abort();
-    socket->connectToHost(ipAddresse->text(), portSpinBox->value());
+    fLogin->show();
+    this->setEnabled(false);
 }
 
 void mainWindowClient::pressDisconnectButton() {
-    socket->abort();
+    user.getSocketId()->abort();
 }
 
 void mainWindowClient::sendMessage() {
@@ -45,7 +46,7 @@ void mainWindowClient::sendMessage() {
     out.device()->seek(0);
     out << (quint16)(packageMessage.size() - sizeof(quint16));
 
-    socket->write(packageMessage);
+    user.getSocketId()->write(packageMessage);
 
     zoneMessage->clear();
     zoneMessage->setFocus(); // cursor of keyboard focus here
@@ -56,16 +57,16 @@ void mainWindowClient::sendMessageByEnter() {
 }
 
 void mainWindowClient::readMessage() {
-    QDataStream in(socket);
+    QDataStream in(user.getSocketId());
 
     if (size == 0) {
-        if (socket->bytesAvailable() < (int)sizeof(quint16)) {
+        if (user.getSocketId()->bytesAvailable() < (int)sizeof(quint16)) {
             return;
         }
         in >> size;
     }
 
-    if (socket->bytesAvailable() < size) {
+    if (user.getSocketId()->bytesAvailable() < size) {
         return;
     }
     QString message;
@@ -89,6 +90,7 @@ void mainWindowClient::disconnected() {
     ConnectButton->setEnabled(true);
     disconnectButton->setEnabled(false);
     chatZone->setEnabled(false);
+    nickName->setEnabled(true);
 }
 
 void mainWindowClient::errorSocket(QAbstractSocket::SocketError err) {
@@ -103,8 +105,27 @@ void mainWindowClient::errorSocket(QAbstractSocket::SocketError err) {
             chatZone->append(tr("<em>Error: Server is disconnected</em>"));
             break;
         default:
-            chatZone->append(tr("<em>Error: ") + socket->errorString() + tr("</em>"));
+            chatZone->append(tr("<em>Error: ") + user.getSocketId()->errorString() + tr("</em>"));
     }
 
     ConnectButton->setEnabled(true);
+}
+
+void mainWindowClient::getInfoUser() {
+    // get info user
+    user.setNickName(fLogin->getName());
+    user.setAge(fLogin->getAge());
+
+    nickName->setText(user.getNickName());
+    nickName->setEnabled(false);
+
+    // setup connection
+    chatZone->append(tr("<em>Connecting to server...</em>"));
+    ConnectButton->setEnabled(false);
+
+    user.getSocketId()->abort();
+    user.getSocketId()->connectToHost(ipAddresse->text(), portSpinBox->value());
+
+    // enable main window
+    this->setEnabled(true);
 }

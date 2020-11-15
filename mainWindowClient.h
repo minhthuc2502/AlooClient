@@ -1,9 +1,10 @@
 #ifndef MAINWINDOWCLIENT_H
 #define MAINWINDOWCLIENT_H
 
-
 #include <QtWidgets>
 #include <QtNetwork>
+#include <userInfo.h>
+#include <formLogin.h>
 #include "ui_mainWindowClient.h"
 
 class mainWindowClient : public QWidget, private Ui::mainWindowClient {
@@ -19,8 +20,10 @@ private slots:
     void sendMessageByEnter();
     void sendMessage();
     void errorSocket(QAbstractSocket::SocketError err);
+    void getInfoUser();
 private:
-    QTcpSocket *socket;
+    userInfo user;
+    formLogin *fLogin;
     quint16 size;
 };
 

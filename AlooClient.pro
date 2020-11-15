@@ -1,10 +1,15 @@
 QT += widgets network
 
 HEADERS += \
-    mainWindowClient.h
+    formLogin.h \
+    mainWindowClient.h \
+    userInfo.h
 
 SOURCES += \
+    formLogin.cpp \
     main.cpp \
-    mainWindowClient.cpp
+    mainWindowClient.cpp \
+    userInfo.cpp
 
-FORMS += mainWindowClient.ui
+FORMS += mainWindowClient.ui \
+         formUser.ui
