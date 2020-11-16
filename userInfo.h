@@ -2,22 +2,25 @@
 #define USERINFO_H
 
 #include <stdio.h>
-#include <QDataStream>
+#include <QtWidgets>
 #include <QtNetwork>
 class userInfo {
 public:
     userInfo();
     void setNickName(QString name);
-    void setAge(quint8 a);
+    void setAge(int a);
     void setSocketId(QTcpSocket *socket);
+    void setAvatar(QPixmap ava);
 
     QTcpSocket* getSocketId();
     QString getNickName();
+    QPixmap getAvatar();
+    int getAge();
 private:
     QString nickName;
-    quint8 age;
+    int age;
     QTcpSocket *idSocket;
-    QImage *avatar;
+    QPixmap avatar;
 };
 
 #endif // USERINFO_H

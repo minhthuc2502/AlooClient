@@ -17,8 +17,12 @@ QString formLogin::getName() {
     return name;
 }
 
-quint8 formLogin::getAge() {
+int formLogin::getAge() {
     return age;
+}
+
+QPixmap formLogin::getAvatar() {
+    return avatar;
 }
 
 void formLogin::HandleCloseButton() {

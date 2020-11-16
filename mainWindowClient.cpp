@@ -80,6 +80,8 @@ void mainWindowClient::readMessage() {
 
 void mainWindowClient::connected() {
     chatZone->append(tr("<em>Connect successfully !</em>"));
+
+    sendInfoUserToServer();
     // theses widgets will be enabled only connection established
     disconnectButton->setEnabled(true);
     chatZone->setEnabled(true);
@@ -115,6 +117,7 @@ void mainWindowClient::getInfoUser() {
     // get info user
     user.setNickName(fLogin->getName());
     user.setAge(fLogin->getAge());
+    user.setAvatar(fLogin->getAvatar());
 
     nickName->setText(user.getNickName());
     nickName->setEnabled(false);
@@ -125,4 +128,45 @@ void mainWindowClient::getInfoUser() {
 
     user.getSocketId()->abort();
     user.getSocketId()->connectToHost(ipAddresse->text(), portSpinBox->value());
+}
+
+void mainWindowClient::sendImageToServer() {
+    QBuffer buffer;
+    buffer.open(QIODevice::ReadWrite);
+    user.getAvatar().save(&buffer, "jpg");
+    quint32 pix_len = (quint32)buffer.data().size();
+
+    QByteArray dataArray;
+    QByteArray lengthArray;
+    QDataStream out(&lengthArray, QIODevice::WriteOnly);
+    out << pix_len;
+    // length + data
+    dataArray.append(lengthArray);
+    dataArray.append(buffer.data());
+    // send image
+    user.getSocketId()->write(dataArray);
+}
+
+void mainWindowClient::sendInfoUserToServer() {
+    sendImageToServer();
+
+    QByteArray packageName;
+    QDataStream outName(&packageName, QIODevice::WriteOnly);
+
+    outName << (quint16) 0;
+    outName << user.getNickName();
+    outName.device()->seek(0);
+    outName << (quint16)(packageName.size() - sizeof(quint16));
+
+    user.getSocketId()->write(packageName);
+
+    QByteArray packageAge;
+    QDataStream outAge(&packageAge, QIODevice::WriteOnly);
+
+    outAge << (quint16) 0;
+    outAge << user.getAge();
+    outAge.device()->seek(0);
+    outAge << (quint16)(packageAge.size() - sizeof(quint16));
+
+    user.getSocketId()->write(packageAge);
 }

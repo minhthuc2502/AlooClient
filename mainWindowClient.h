@@ -11,6 +11,8 @@ class mainWindowClient : public QWidget, private Ui::mainWindowClient {
     Q_OBJECT
 public:
     mainWindowClient();
+    void sendImageToServer();
+    void sendInfoUserToServer();
 private slots:
     void pressConnectButton();
     void pressDisconnectButton();

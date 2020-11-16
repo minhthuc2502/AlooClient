@@ -9,7 +9,8 @@ class formLogin : public QDialog, private Ui::formUser {
 public:
     formLogin();
     QString getName();
-    quint8 getAge();
+    int getAge();
+    QPixmap getAvatar();
 private slots:
     void HandleCloseButton();
     void saveInfo();
@@ -18,7 +19,7 @@ signals:
     void clickedCloseButton();
 private:
     QString name;
-    quint8 age;
+    int age;
     QPixmap avatar;
 };
 #endif // FORMLOGIN_H
