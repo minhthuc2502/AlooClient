@@ -11,6 +11,9 @@ formLogin::formLogin() {
 void formLogin::saveInfo() {
     name = nameLineEdit->text();
     age = ageSpinBox->value();
+    if (name.isEmpty()) {
+        QMessageBox::information(this, "information", tr("You must fill all informations in this form"));
+    }
 }
 
 QString formLogin::getName() {

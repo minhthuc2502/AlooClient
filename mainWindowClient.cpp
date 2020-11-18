@@ -114,6 +114,10 @@ void mainWindowClient::errorSocket(QAbstractSocket::SocketError err) {
 }
 
 void mainWindowClient::getInfoUser() {
+    if (fLogin->getName().isEmpty()) {
+        fLogin->show();
+        return;
+    }
     // get info user
     user.setNickName(fLogin->getName());
     user.setAge(fLogin->getAge());
